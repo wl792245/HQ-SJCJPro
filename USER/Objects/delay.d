@@ -1,0 +1,21 @@
+.\objects\delay.o: ..\DRIVER\src\delay.c
+.\objects\delay.o: ..\CORE\inc\stm32f10x.h
+.\objects\delay.o: ..\CORE\inc\core_cm3.h
+.\objects\delay.o: D:\Program Files\Keil_V5\Arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\delay.o: ..\CORE\inc\system_stm32f10x.h
+.\objects\delay.o: ..\CORE\inc\stm32f10x_conf.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_adc.h
+.\objects\delay.o: ..\CORE\inc\stm32f10x.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_dma.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_exti.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_flash.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_i2c.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_pwr.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_rtc.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_spi.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_tim.h
+.\objects\delay.o: ..\FWlib\inc\stm32f10x_usart.h
+.\objects\delay.o: ..\FWlib\inc\misc.h
+.\objects\delay.o: ..\DRIVER\inc\delay.h

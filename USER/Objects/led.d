@@ -1,0 +1,23 @@
+.\objects\led.o: ..\HARDWARE\src\led.c
+.\objects\led.o: ..\CORE\inc\stm32f10x.h
+.\objects\led.o: ..\CORE\inc\core_cm3.h
+.\objects\led.o: D:\Program Files\Keil_V5\Arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\led.o: ..\CORE\inc\system_stm32f10x.h
+.\objects\led.o: ..\CORE\inc\stm32f10x_conf.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_adc.h
+.\objects\led.o: ..\CORE\inc\stm32f10x.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_dma.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_exti.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_flash.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_i2c.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_pwr.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_rtc.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_spi.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_tim.h
+.\objects\led.o: ..\FWlib\inc\stm32f10x_usart.h
+.\objects\led.o: ..\FWlib\inc\misc.h
+.\objects\led.o: ..\MCU_FUN\inc\mcu_gpio.h
+.\objects\led.o: ..\DRIVER\inc\delay.h
+.\objects\led.o: ..\HARDWARE\inc\led.h
