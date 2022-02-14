@@ -27,13 +27,64 @@
 #include "hwtimer.h"
 
 
+TIMER_INFO timer_info;
+
+
 /*
 ************************************************************
-*	函数名称：	Timer1_8_PWM_Init
+*	函数名称：	Timer_X_Init
 *
-*	函数功能：	Timer1或8的PWM配置
+*	函数功能：	Timer的定时配置
 *
-*	入口参数：	TIMx：TIM1 或者 TIM8
+*	入口参数：	TIMx：TIMx
+*				psc分频值
+*				arr：重载值
+*				pree_prio：抢占优先级
+*				sub_prio：子优先级
+*
+*	返回参数：	无
+*
+*	说明：		定时功能
+************************************************************
+*/
+void Timer_X_Init(TIM_TypeDef *TIMx, unsigned short psc, unsigned short arr, unsigned char pree_prio, unsigned char sub_prio)
+{
+
+	MCU_TIMER_Base_Init(TIMx, TIM_CKD_DIV1, TIM_CounterMode_Up, arr, psc, 0);
+	
+	if(TIMx == TIM1)
+		MCU_NVIC_Init(TIM1_UP_IRQn, ENABLE, pree_prio, sub_prio);		//APB2总线---72MHz
+	else if(TIMx == TIM2)
+		MCU_NVIC_Init(TIM2_IRQn, ENABLE, pree_prio, sub_prio);			//APB1总线---36MHz
+	else if(TIMx == TIM3)
+		MCU_NVIC_Init(TIM3_IRQn, ENABLE, pree_prio, sub_prio);			//APB1总线---36MHz
+	else if(TIMx == TIM4)
+		MCU_NVIC_Init(TIM4_IRQn, ENABLE, pree_prio, sub_prio);			//APB1总线---36MHz
+	else if(TIMx == TIM5)
+		MCU_NVIC_Init(TIM5_IRQn, ENABLE, pree_prio, sub_prio);			//APB1总线---36MHz
+	else if(TIMx == TIM6)
+		MCU_NVIC_Init(TIM6_IRQn, ENABLE, pree_prio, sub_prio);			//APB1总线---36MHz
+	else if(TIMx == TIM7)
+		MCU_NVIC_Init(TIM7_IRQn, ENABLE, pree_prio, sub_prio);			//APB1总线---36MHz
+	else if(TIMx == TIM8)
+		MCU_NVIC_Init(TIM8_UP_IRQn, ENABLE, pree_prio, sub_prio);		//APB2总线---72MHz
+	
+	TIM_ITConfig(TIMx, TIM_IT_Update, ENABLE);							//使能更新中断
+	
+	TIM_Cmd(TIMx, ENABLE); 												//使能定时器
+
+}
+
+/*
+************************************************************
+*	函数名称：	Timer_X_PWM_Init
+*
+*	函数功能：	Timer的PWM配置
+*
+*	入口参数：	TIMx：TIMx
+*				tp：通道1-1 	通道2-2	通道3-4	通道4-8		可或
+*				gpio_group：GPIO组
+*				gpio_pin：Pin
 *				psc：分频值
 *				arr：重载值
 *
@@ -42,14 +93,15 @@
 *	说明：		
 ************************************************************
 */
-void Timer1_8_PWM_Init(TIM_TypeDef *TIMx, GPIO_TypeDef *gpio_group, unsigned short gpio_pin, unsigned short psc, unsigned short arr)
+void Timer_X_PWM_Init(TIM_TypeDef *TIMx, unsigned char tp, unsigned short pwm_mode,
+						GPIO_TypeDef *gpio_group, unsigned short gpio_pin, unsigned short psc, unsigned short arr)
 {
-	
+
 	MCU_GPIO_Init(gpio_group, gpio_pin, GPIO_Mode_AF_PP, GPIO_Speed_50MHz, (void *)0);
 	
 	MCU_TIMER_Base_Init(TIMx, TIM_CKD_DIV1, TIM_CounterMode_Up, arr, psc, 0);
 	
-	MCU_Timer_PWM_Init(TIMx, TPC_4, TIM_OCMode_PWM1, TIM_OutputState_Enable, 0, 0, TIM_OCPolarity_Low, 0, 0, 0);
+	MCU_Timer_PWM_Init(TIMx, tp, pwm_mode, TIM_OutputState_Enable, 0, 0, TIM_OCPolarity_Low, 0, 0, 0);
 	
 	TIM_Cmd(TIMx, ENABLE);										//使能TIMx
 
@@ -57,68 +109,134 @@ void Timer1_8_PWM_Init(TIM_TypeDef *TIMx, GPIO_TypeDef *gpio_group, unsigned sho
 
 /*
 ************************************************************
-*	函数名称：	TIM3_PWM_Init
+*	函数名称：	TIM1_UP_IRQHandler
 *
-*	函数功能：	Timer3_PWM配置
+*	函数功能：	Timer1更新中断
 *
-*	入口参数：	psc：分频值
-*				arr：重载值
+*	入口参数：	无
 *
 *	返回参数：	无
 *
 *	说明：		
 ************************************************************
 */
-void TIM3_PWM_Init(GPIO_TypeDef *gpio_group, unsigned short gpio_pin, unsigned short psc, unsigned short arr)
+void TIM1_UP_IRQHandler(void)
 {
-	
-	MCU_GPIO_Init(gpio_group, gpio_pin, GPIO_Mode_AF_PP, GPIO_Speed_50MHz, (void *)0);
-	
-	MCU_TIMER_Base_Init(TIM3, TIM_CKD_DIV1, TIM_CounterMode_Up, arr, psc, 0);
-	
-	MCU_Timer_PWM_Init(TIM3, TPC_4, TIM_OCMode_PWM2, TIM_OutputState_Enable, 0, 0, TIM_OCPolarity_Low, 0, 0, 0);
-	
-	TIM_Cmd(TIM3, ENABLE);										//使能TIM3
+
+	if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET)
+	{
+		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+		
+		timer_info.time_cnt++;
+	}
 
 }
 
 /*
 ************************************************************
-*	函数名称：	Timer6_7_Init
+*	函数名称：	TIM2_IRQHandler
 *
-*	函数功能：	Timer6或7的定时配置
+*	函数功能：	Timer2中断
 *
-*	入口参数：	TIMx：TIM6 或者 TIM7
-*				psc分频值
-*				arr：重载值
+*	入口参数：	无
 *
 *	返回参数：	无
 *
-*	说明：		timer6和timer7只具有更新中断功能
+*	说明：		
 ************************************************************
 */
-#ifdef STM32F10X_HD
-void Timer6_7_Init(TIM_TypeDef *TIMx, unsigned short psc, unsigned short arr)
+void TIM2_IRQHandler(void)
 {
-	
-	MCU_TIMER_Base_Init(TIMx, 0, TIM_CounterMode_Up, arr, psc, 0);
-	
-	if(TIMx == TIM6)
-		MCU_NVIC_Init(TIM6_IRQn, ENABLE, 1, 1);
-	else
-		MCU_NVIC_Init(TIM7_IRQn, ENABLE, 1, 1);
-	
-	TIM_ITConfig(TIMx, TIM_IT_Update, ENABLE);					//使能更新中断
-	
-	TIM_Cmd(TIMx, ENABLE); 										//使能定时器
+
+	if(TIM_GetITStatus(TIM2, TIM_IT_Update) == SET)
+	{
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+		
+		timer_info.time_cnt++;
+	}
 
 }
-#endif
+
+/*
+************************************************************
+*	函数名称：	TIM3_IRQHandler
+*
+*	函数功能：	Timer3中断
+*
+*	入口参数：	无
+*
+*	返回参数：	无
+*
+*	说明：		
+************************************************************
+*/
+void TIM3_IRQHandler(void)
+{
+
+	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET)
+	{
+		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+		
+		timer_info.time_cnt++;
+	}
+
+}
+
+/*
+************************************************************
+*	函数名称：	TIM4_IRQHandler
+*
+*	函数功能：	Timer4中断
+*
+*	入口参数：	无
+*
+*	返回参数：	无
+*
+*	说明：		
+************************************************************
+*/
+void TIM4_IRQHandler(void)
+{
+
+	if(TIM_GetITStatus(TIM4, TIM_IT_Update) == SET)
+	{
+		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
+		
+		timer_info.time_cnt++;
+	}
+
+}
+
+/*
+************************************************************
+*	函数名称：	TIM5_IRQHandler
+*
+*	函数功能：	Timer5中断
+*
+*	入口参数：	无
+*
+*	返回参数：	无
+*
+*	说明：		
+************************************************************
+*/
+void TIM5_IRQHandler(void)
+{
+
+	if(TIM_GetITStatus(TIM5, TIM_IT_Update) == SET)
+	{
+		TIM_ClearITPendingBit(TIM5, TIM_IT_Update);
+		
+		timer_info.time_cnt++;
+	}
+
+}
+
 /*
 ************************************************************
 *	函数名称：	TIM6_IRQHandler
 *
-*	函数功能：	RTOS的心跳定时中断
+*	函数功能：	Timer6中断
 *
 *	入口参数：	无
 *
@@ -127,22 +245,23 @@ void Timer6_7_Init(TIM_TypeDef *TIMx, unsigned short psc, unsigned short arr)
 *	说明：		
 ************************************************************
 */
-#ifdef STM32F10X_HD
-void TIM6_IRQHandler(void)
-{
+//void TIM6_IRQHandler(void)
+//{
 
-	if(TIM_GetITStatus(TIM6, TIM_IT_Update) == SET)
-	{
-		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-	}
+//	if(TIM_GetITStatus(TIM6, TIM_IT_Update) == SET)
+//	{
+//		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+//		
+//		timer_info.time_cnt++;
+//	}
 
-}
-#endif
+//}
+
 /*
 ************************************************************
 *	函数名称：	TIM7_IRQHandler
 *
-*	函数功能：	Timer7更新中断服务函数
+*	函数功能：	Timer7中断
 *
 *	入口参数：	无
 *
@@ -151,14 +270,39 @@ void TIM6_IRQHandler(void)
 *	说明：		
 ************************************************************
 */
-#ifdef STM32F10X_HD
-void TIM7_IRQHandler(void)
+//void TIM7_IRQHandler(void)
+//{
+
+//	if(TIM_GetITStatus(TIM7, TIM_IT_Update) == SET)
+//	{
+//		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
+//		
+//		timer_info.time_cnt++;
+//	}
+
+//}
+
+/*
+************************************************************
+*	函数名称：	TIM8_UP_IRQHandler
+*
+*	函数功能：	Timer8更新中断
+*
+*	入口参数：	无
+*
+*	返回参数：	无
+*
+*	说明：		
+************************************************************
+*/
+void TIM8_UP_IRQHandler(void)
 {
 
-	if(TIM_GetITStatus(TIM7, TIM_IT_Update) == SET)
+	if(TIM_GetITStatus(TIM8, TIM_IT_Update) == SET)
 	{
-		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
+		TIM_ClearITPendingBit(TIM8, TIM_IT_Update);
+		
+		timer_info.time_cnt++;
 	}
 
 }
-#endif

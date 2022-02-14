@@ -28,7 +28,7 @@
 #include "net_task.h"
 
 //协议
-#include "onenet.h"
+//#include "onenet.h"
 #include "fault.h"
 
 //驱动
@@ -57,6 +57,12 @@ static unsigned char net_fault_level3_cnt = 0;
 *
 *	说明：		
 ************************************************************
+*/
+/*
+其实函数名称前面加上__weak 修饰符，我们一般称这个函数为“弱函数”。
+加上了__weak 修饰符的函数，用户可以在用户文件中重新定义一个同名函数，最终编译器编译的时候，会选择用户定义的函数，
+如果用户没有重新定义这个函数，那么编译器就会执行__weak 声明的函数，并且编译器不会报错。
+所以我们可以在别的地方定义一个相同名字的函数，而不必也尽量不要修改之前的函数，。
 */
 __weak void NET_Event_CallBack(NET_EVENT net_event)
 {

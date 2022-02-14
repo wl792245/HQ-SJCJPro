@@ -2,15 +2,15 @@
 //单片机头文件
 #include "stm32f10x.h"
 
-////框架
-//#include "framework.h"
+//框架
+#include "framework.h"
 
 ////网络协议层
 //#include "onenet.h"
 //#include "fault.h"
 
-////网络设备
-//#include "net_device.h"
+//网络设备
+#include "net_device.h"
 
 ////网络任务
 //#include "net_task.h"
@@ -18,10 +18,10 @@
 ////驱动
 #include "delay.h"
 #include "usart.h"
-//#include "hwtimer.h"
+#include "hwtimer.h"
 //#include "i2c.h"
 //#include "iwdg.h"
-//#include "rtc.h"
+#include "rtc.h"
 
 ////硬件
 #include "led.h"
@@ -45,7 +45,7 @@
 //分配内存空间
 #define TLSF_MEM_POOL_SIZE		1024 * 15   //15K
 
-static unsigned char tlsf_mem_pool[TLSF_MEM_POOL_SIZE];
+__align(4) static  unsigned char tlsf_mem_pool[TLSF_MEM_POOL_SIZE];
 /*
 ************************************************************
 *	函数名称：	Hardware_Init
@@ -69,7 +69,7 @@ void Hardware_Init(void)
 	USARTx_ResetMemoryBaseAddr(USART_DEBUG, (unsigned int)alter_info.alter_buf, sizeof(alter_info.alter_buf), USART_RX_TYPE);
 #endif
 	
-	//init_memory_pool(TLSF_MEM_POOL_SIZE, tlsf_mem_pool);						//内存池初始化
+	init_memory_pool(TLSF_MEM_POOL_SIZE, tlsf_mem_pool);						//内存池初始化
 	
 	LED_Init();																	//LED初始化
 //	
@@ -79,8 +79,11 @@ void Hardware_Init(void)
 //	
 //	IIC_Init(I2C2);																//IIC总线初始化
 //	
-//	RTC_Init();																	//初始化RTC
-//	
+	//RTC_Init();																	//初始化RTC
+//	while(dht11_info.dht11_exit())
+//	{
+//		
+//	}
 	UsartPrintf(USART_DEBUG, "DHT11: %s\r\n", dht11_info.dht11_exit() ? "Error" : "Ok");	//EEPROM检测
 //	
 //	UsartPrintf(USART_DEBUG, "SHT20: %s\r\n", SHT20_Exist() ? "Ok" : "Err");	//SHT20检测
@@ -108,7 +111,7 @@ void Hardware_Init(void)
 //	
 //	//Iwdg_Init(4, 1250); 														//64分频，每秒625次，重载1250次，2s
 //	
-//	Timer_X_Init(TIM6, 49, 35999, 1, 0);										//72MHz，36000分频-500us，50重载值。则中断周期为500us * 50 = 25ms
+	//Timer_X_Init(TIM6, 49, 35999, 1, 0);										//72MHz，36000分频-500us，50重载值。则中断周期为500us * 50 = 25ms
 	
 	UsartPrintf(USART_DEBUG, "Hardware init OK\r\n");							//提示初始化完成
 
@@ -144,24 +147,31 @@ void SENSOR_Task(void)
 //		SHT20_GetValue();												//采集传感器数据
 //	}
 			
-//	if(++count >= 10)										//每隔一段时间发送一次红外数据
-//	{
-//		count = 0;
-//		
-//		NET_DEVICE_GetSignal();
-//		
-//		//NEC_SendData(0, send_data++);
-//	}
+	if(++count >= 10)										//每隔一段时间发送一次红外数据
+	{
+		count = 0;
+		
+		//NET_DEVICE_GetSignal();
+		
+		//NEC_SendData(0, send_data++);
+	}
 
 }
 int main()
 {
 	Hardware_Init();									//硬件初始化
-	while(1)
-	{
-		DelayXms(1000);
-		DelayXms(1000);
-		SENSOR_Task();
-		
-	}
+	NET_DEVICE_IO_Init();							//网络设备IO初始化
+	NET_DEVICE_Reset();
+	FW_Init();											//框架层初始化
+	FW_CreateTask(SENSOR_Task, 300);
+	//NET_Task_Init();
+	UsartPrintf(USART_DEBUG, "Running...\r\n");
+	FW_StartSchedule();									//开始任务调度
+//	while(1)
+//	{
+//		DelayXms(1000);
+//		DelayXms(1000);
+//		SENSOR_Task();
+//		
+//	}
 }

@@ -117,6 +117,7 @@ _Bool RTC_Init(void)
 	PWR_BackupAccessCmd(ENABLE);												//使能后备寄存器访问
 	
 	BKP_DeInit();																//复位备份区域
+	
 #if(USE_EXT_RCC == 1)
 	RCC_LSEConfig(RCC_LSE_ON);													//设置外部低速晶振(LSE),使用外设低速晶振
 	

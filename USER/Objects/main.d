@@ -18,11 +18,15 @@
 .\objects\main.o: ..\FWlib\inc\stm32f10x_tim.h
 .\objects\main.o: ..\FWlib\inc\stm32f10x_usart.h
 .\objects\main.o: ..\FWlib\inc\misc.h
+.\objects\main.o: ..\FRAMEWORK\inc\framework.h
+.\objects\main.o: ..\NET\device\inc\net_device.h
+.\objects\main.o: ..\TLSF\inc\tlsf.h
 .\objects\main.o: ..\DRIVER\inc\delay.h
 .\objects\main.o: ..\DRIVER\inc\usart.h
+.\objects\main.o: ..\DRIVER\inc\hwtimer.h
+.\objects\main.o: ..\DRIVER\inc\rtc.h
 .\objects\main.o: ..\HARDWARE\inc\led.h
 .\objects\main.o: ..\HARDWARE\inc\dht11.h
-.\objects\main.o: ..\TLSF\inc\tlsf.h
 .\objects\main.o: D:\Program Files\Keil_V5\Arm\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: D:\Program Files\Keil_V5\Arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: D:\Program Files\Keil_V5\Arm\ARM\ARMCC\Bin\..\include\stdio.h

@@ -5,11 +5,21 @@
 #include "stm32f10x.h"
 
 
-void Timer1_8_PWM_Init(TIM_TypeDef *TIMx, GPIO_TypeDef *gpio_group, unsigned short gpio_pin, unsigned short psc, unsigned short arr);
+typedef struct
+{
 
-void TIM3_PWM_Init(GPIO_TypeDef *gpio_group, unsigned short gpio_pin, unsigned short psc, unsigned short arr);
+	unsigned int time_cnt;
 
-void Timer6_7_Init(TIM_TypeDef *TIMx, unsigned short psc, unsigned short arr);
+} TIMER_INFO;
+
+extern TIMER_INFO timer_info;
+
+
+void Timer_X_Init(TIM_TypeDef *TIMx, unsigned short psc, unsigned short arr, unsigned char pree_prio, unsigned char sub_prio);
+
+void Timer_X_PWM_Init(TIM_TypeDef *TIMx, unsigned char tp, unsigned short pwm_mode, 
+							GPIO_TypeDef *gpio_group, unsigned short gpio_pin, unsigned short psc, unsigned short arr);
+
 
 
 #endif

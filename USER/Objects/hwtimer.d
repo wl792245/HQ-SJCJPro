@@ -1,0 +1,24 @@
+.\objects\hwtimer.o: ..\DRIVER\src\hwtimer.c
+.\objects\hwtimer.o: ..\MCU_FUN\inc\mcu_timer.h
+.\objects\hwtimer.o: ..\CORE\inc\stm32f10x.h
+.\objects\hwtimer.o: ..\CORE\inc\core_cm3.h
+.\objects\hwtimer.o: D:\Program Files\Keil_V5\Arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\hwtimer.o: ..\CORE\inc\system_stm32f10x.h
+.\objects\hwtimer.o: ..\CORE\inc\stm32f10x_conf.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_adc.h
+.\objects\hwtimer.o: ..\CORE\inc\stm32f10x.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_dma.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_exti.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_flash.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_i2c.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_pwr.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_rtc.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_spi.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_tim.h
+.\objects\hwtimer.o: ..\FWlib\inc\stm32f10x_usart.h
+.\objects\hwtimer.o: ..\FWlib\inc\misc.h
+.\objects\hwtimer.o: ..\MCU_FUN\inc\mcu_nvic.h
+.\objects\hwtimer.o: ..\MCU_FUN\inc\mcu_gpio.h
+.\objects\hwtimer.o: ..\DRIVER\inc\hwtimer.h

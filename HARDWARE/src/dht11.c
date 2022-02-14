@@ -171,7 +171,7 @@ __inline static _Bool DHT11_Check(void)
 *
 *	入口参数：	无
 *
-*	返回参数：	0-未检测到	1-检测到
+*	返回参数：	0-检测到,1-未检测到
 *
 *	说明：		
 ************************************************************
@@ -256,7 +256,7 @@ _Bool DHT11_Get_TemperAndHumi(void)
 	u8 buf[5];
 	u8 i;
 	DHT11_Reset();//复位DHT11总线完成
-	if(DHT11_Check()==0)
+	if(DHT11_Check()==DHT11_OK)
 	{
 		//检测到DHT11响应
 		for(i=0;i<5;i++)//读取40位数据

@@ -19,7 +19,7 @@
 **/
 
 //协议
-#include "onenet.h"
+//#include "onenet.h"
 #include "fault.h"
 
 //网络设备

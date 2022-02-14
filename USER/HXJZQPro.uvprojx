@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE\inc;..\FWlib\inc;..\MCU_FUN\inc;..\DRIVER\inc;..\HARDWARE\inc;..\TLSF\inc</IncludePath>
+              <IncludePath>..\CORE\inc;..\FWlib\inc;..\MCU_FUN\inc;..\DRIVER\inc;..\HARDWARE\inc;..\TLSF\inc;..\NET\device\inc;..\FRAMEWORK\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -467,6 +467,11 @@
               <FileType>1</FileType>
               <FilePath>..\FWlib\src\stm32f10x_rtc.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_bkp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FWlib\src\stm32f10x_bkp.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -507,6 +512,11 @@
               <FileType>1</FileType>
               <FilePath>..\MCU_FUN\src\mcu_nvic.c</FilePath>
             </File>
+            <File>
+              <FileName>mcu_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MCU_FUN\src\mcu_timer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -521,6 +531,16 @@
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\DRIVER\src\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>hwtimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVER\src\hwtimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVER\src\rtc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -560,6 +580,18 @@
         </Group>
         <Group>
           <GroupName>net_device</GroupName>
+          <Files>
+            <File>
+              <FileName>net_device.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NET\device\src\net_device.c</FilePath>
+            </File>
+            <File>
+              <FileName>net_io.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NET\device\src\net_io.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>bsp_task</GroupName>
@@ -572,6 +604,13 @@
         </Group>
         <Group>
           <GroupName>framework</GroupName>
+          <Files>
+            <File>
+              <FileName>framework.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FRAMEWORK\src\framework.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>tlsf</GroupName>

@@ -2,9 +2,6 @@
 #define _NET_IO_H_
 
 
-
-
-
 #define RB_BUFFER_SIZE		512
 
 #define RB_BUFFER2_SIZE		512
